@@ -19,7 +19,7 @@ export const StyledMenuItem = styled.li`
     flex-direction: column;
     margin: 0;
 
-    & a { //Aqui estamos estilizando a tag dentro do li, no caso o <a>
+& a {// Aqui estamos estilizando a tag dentro do li, no caso o <a>
         font-size: 0.8rem;
         color: #1f1e31;
     }
