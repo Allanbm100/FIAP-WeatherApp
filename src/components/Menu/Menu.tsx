@@ -12,7 +12,7 @@ export const Menu = () => {
         </StyledMenuItem>
         <StyledMenuItem>
           <BiSearch size="1.5rem" color="#38aede" />
-          <Link to="/busca">BuscLink</Link>
+          <Link to="/busca">Buscar</Link>
         </StyledMenuItem>
         <StyledMenuItem>
           <BiHeart size="1.5rem" color="#38aede" />
