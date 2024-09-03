@@ -16,7 +16,13 @@ export default function Login() {
   };
 
   const handleClick = () => {
-    console.log(login, password)
+
+    const params = {
+      login: login,
+      password: password
+    } // Isso é uma forma de colocar as informações em um objeto
+
+    console.log(params)
   }
 
   return (
