@@ -1,0 +1,19 @@
+Vite - Configura o webpack
+npm create vite@latest my-first-app -- --template react-ts
+'my-first-app' = nome do projeto
+'--' = caso o npm for maior que 7 (para descobrir é só utilizar 'npm -v' no git bash)
+'react-ts' = framework utilizado (tem outros)
+
+  cd my-first-app
+  npm install
+  npm run dev
+
+Após o código npm run dev, o projeto fica rodando. Para parar, é só apertar ctrl + c.
+
+Dentro de src, sempre devemos criar uma pasta 'components', para pequenos componentes.
+    Dentro da pasta components, quando criarmos uma pasta, deve ser com a primeira letra maiúscula.
+        Dentro da pasta do componente, devemos criar o arquivo com a primeira letra maiúscula
+
+import "" - Serve para importar um arquivo por completo
+import {} - Serve para importar uma constante em função, já que pode ter mais de uma função no arquivo
+import App - Serve para importar algo que finalizou em "export default" - Função única
