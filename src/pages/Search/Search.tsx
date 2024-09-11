@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Layout } from "../../components/Layout/Layout";
-import { searchMock } from "../../mocks/searchMock"
+import { searchMock } from "../../mocks/searchMock";
 
 export default function Search() {
   {/* Esse 'export default' serve para exportarmos uma página completa */ }
@@ -11,13 +11,23 @@ export default function Search() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCityName(event.target.value);
-  }; //Isso utiliza o const useState + onChange = {handle...} para capiturar dados do input
+  }; //Isso utiliza o const useState + onChange = {handle...} para capturar dados do input
+
+  const loadCities = async () => {
+    try {
+      const response = await fetch(`https://brasilapi.com.br/api/cptec/v1/cidade/${cityName}`);
+
+      const data = await response.json();
+      console.log(data);
+
+      setCityList(data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleClick = () => {
-    setHasSearch(true);
-    if (cityName !== "Santo André") {
-      setNoResult(true);
-    }
+    loadCities();
   };
 
   const handleClear = () => {
@@ -36,7 +46,7 @@ export default function Search() {
           id="search"
           name="search"
           onChange={handleChange}
-          value={cityName}
+        // value={cityName}
         />
         <button type="button" onClick={handleClick}>Buscar</button>
       </form>
@@ -44,19 +54,14 @@ export default function Search() {
         <div>
           <p>Busca pela cidade: {cityName}</p>
           <button onClick={handleClear}>Limpar Busca</button>
-          {noResult ?
-            <p>Nenhuma cidade encontrada</p>
-            : (
-              <ul>
-                {
-                  cityList.map((city) => (
-                    <li key={city.id}> {/* Esse 'key' serve pq precisamos definí-lo caso citemos um .map */}
-                      {city.nome} / {city.estado}
-                    </li>
-                  ))}
-              </ul>)
-          }
+
           <ul>
+            {
+              cityList.map((city) => (
+                <li key={city.id}> {/* Esse 'key' serve pq precisamos definí-lo caso citemos um .map */}
+                  {city.nome} / {city.estado}
+                </li>
+              ))}
           </ul>
         </div>
       ) : null}
