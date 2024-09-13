@@ -1,4 +1,4 @@
-import { StyledInput } from "./Input.styled";
+import { StyledInput, StyledLabel } from "./Input.styled";
 
 interface InputProps {
   type: string;
@@ -11,7 +11,7 @@ interface InputProps {
 export const Input = ({ type, id, name, label, onChange, ...rest }: InputProps) => {
   return (
     <>
-      <label htmlFor={id}>{label}</label>
+      <StyledLabel htmlFor={id}>{label}</StyledLabel>
       <StyledInput
         type={type}
         id={id}

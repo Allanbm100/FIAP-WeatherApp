@@ -15,14 +15,33 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
-  const handleClick = () => {
+  const handleSendLogin = async (params: object) => {
+    try {
+      const response = await fetch('http://localhost:8000/user/login', {
+        method: 'POST',
+        body: JSON.stringify(params),
+      })
 
+      const data = await response.json()
+
+      console.log(data);
+      
+    } catch (error) {
+      console.log('error');
+      
+    } finally {
+      console.log('finaly');
+      
+    };
+  }
+
+  const handleClick = () => {
     const params = {
       login: login,
       password: password
-    } // Isso é uma forma de colocar as informações em um objeto
+    }; // Isso é uma forma de colocar as informações em um objeto
 
-    console.log(params)
+    console.log(params);
   }
 
   return (

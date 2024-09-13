@@ -1,19 +1,25 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Layout } from "../../components/Layout/Layout";
-import { searchMock } from "../../mocks/searchMock";
+import { Input } from "../../components/Input/Input";
+import { Button } from "../../components/Button/Button";
 
 export default function Search() {
-  {/* Esse 'export default' serve para exportarmos uma página completa */ }
-  const [cityName, setCityName] = useState<string>();
-  const [hasSearch, setHasSearch] = useState<boolean>(false);
-  const [cityList, setCityList] = useState(searchMock);
-  const [noResult, setNoResult] = useState<boolean>(false);
+  // Esse 'export default' serve para exportarmos uma página completa
+
+  const navigate = useNavigate();
+
+  const [cityName, setCityName] = useState<string>("");
+  const [cityList, setCityList] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCityName(event.target.value);
   }; //Isso utiliza o const useState + onChange = {handle...} para capturar dados do input
 
   const loadCities = async () => {
+    setIsLoading(true)
+
     try {
       const response = await fetch(`https://brasilapi.com.br/api/cptec/v1/cidade/${cityName}`);
 
@@ -23,6 +29,8 @@ export default function Search() {
       setCityList(data);
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -30,41 +38,42 @@ export default function Search() {
     loadCities();
   };
 
-  const handleClear = () => {
-    setHasSearch(false);
-    setCityName('');
-    setNoResult(false);
+  const handleNavigate = (cityCode: number) => {
+    const state = {
+      cityCode: cityCode
+    }
+    navigate("/", { state }); //Usamos para enviar uma informação para outra página
   };
 
   return (
     <Layout>
       <h1>Busca</h1>
       <form>
-        <label htmlFor="search">Buscar cidade</label>
-        <input
-          type="text"
+        <Input
+          label="Buscar cidade"
           id="search"
           name="search"
+          type="text"
           onChange={handleChange}
-        // value={cityName}
         />
-        <button type="button" onClick={handleClick}>Buscar</button>
-      </form>
-      {hasSearch ? (
-        <div>
-          <p>Busca pela cidade: {cityName}</p>
-          <button onClick={handleClear}>Limpar Busca</button>
 
-          <ul>
-            {
-              cityList.map((city) => (
-                <li key={city.id}> {/* Esse 'key' serve pq precisamos definí-lo caso citemos um .map */}
-                  {city.nome} / {city.estado}
-                </li>
-              ))}
+        <Button type="button" onClick={handleClick}>
+          Buscar
+        </Button>
+      </form>
+
+      <div>
+        {isLoading
+          ? (<p>Carregando</p>)
+          : (<ul>
+            {cityList.map((city) => (
+              <li key={city.id} onClick={() => handleNavigate(city.id)}> {/* 'key' existe por conta do .map */}
+                {city.nome} / {city.estado}
+              </li>
+            ))}
           </ul>
-        </div>
-      ) : null}
+          )}
+      </div>
     </Layout>
   );
 };
