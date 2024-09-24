@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "../../components/Layout/Layout";
 import { Input } from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
+import UserContext from "../../context/UserContext";
+import { Header } from "../../components/Header/Header";
 
 export default function Search() {
   // Esse 'export default' serve para exportarmos uma página completa
 
   const navigate = useNavigate();
 
+  const { userName } = useContext(UserContext);
   const [cityName, setCityName] = useState<string>("");
   const [cityList, setCityList] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -47,7 +50,7 @@ export default function Search() {
 
   return (
     <Layout>
-      <h1>Busca</h1>
+      <Header title="Busca" userName={userName} />
       <form>
         <Input
           label="Buscar cidade"

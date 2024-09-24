@@ -16,7 +16,7 @@ export const Menu = () => {
         </StyledMenuItem>
         <StyledMenuItem>
           <BiHeart size="1.5rem" color="#38aede" />
-          <Link to="#">Favoritos</Link>
+          <Link to="/favorites">Favoritos</Link>
         </StyledMenuItem>
         <StyledMenuItem>
           <BiUserCircle size="1.5rem" color="#38aede" />

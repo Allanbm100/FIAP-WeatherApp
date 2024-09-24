@@ -24,17 +24,21 @@ export const Header = ({ title, userName }: HeaderProps) => {
 
     return (
         <StyledHeader>
-            <h1>{title}</h1>
+        <h1>{title}</h1>
+        <div>
+          {userName ? (
             <StyledUserData>
-                {userName ? (
-                    <>
-                        <span>{userName}</span>
-                        <StyledUserDataButton onClick={handleLogout}>Sair</StyledUserDataButton>
-                    </>
-                ) : (
-                    <StyledUserDataButton onClick={handleLogin}>Login</StyledUserDataButton>
-                )}
+              <span>{userName}</span>
+              <StyledUserDataButton onClick={handleLogout}>
+                Sair
+              </StyledUserDataButton>
             </StyledUserData>
-        </StyledHeader>
+          ) : (
+            <StyledUserDataButton onClick={handleLogin}>
+              Login
+            </StyledUserDataButton>
+          )}
+        </div>
+      </StyledHeader>
     );
 };

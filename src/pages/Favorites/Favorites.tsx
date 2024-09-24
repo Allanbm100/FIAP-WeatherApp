@@ -1,9 +1,15 @@
+import { useContext } from "react";
+import { Header } from "../../components/Header/Header";
 import { Layout } from "../../components/Layout/Layout";
+import UserContext from "../../context/UserContext";
 
 export default function Favorites() {
+
+  const { userName } = useContext(UserContext);
+
   return (
     <Layout>
-      <h1>Favoritos</h1>
+      <Header title="Favoritos" userName={userName} />
     </Layout>
   );
 }

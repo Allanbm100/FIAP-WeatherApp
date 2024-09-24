@@ -25,9 +25,7 @@ export default function Profile() {
 
   return (
     <Layout>
-      <Header title='perfil' userName={userName}>
-
-      </Header>
+      <Header title="Perfil" userName={userName} />
     </Layout>
   );
 };

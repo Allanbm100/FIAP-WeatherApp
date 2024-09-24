@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Layout } from "../../components/Layout/Layout";
 import { useLocation } from "react-router-dom";
+import UserContext from "../../context/UserContext";
+import { verifyLogin } from "../../helpers/verifyLogin";
+import { Header } from "../../components/Header/Header";
 
 export default function Home() {
   const location = useLocation();
+
+  const { userName } = useContext(UserContext);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [cityData, setCityData] = useState();
@@ -35,9 +40,16 @@ export default function Home() {
     loadCity(location.state.cityCode)
   }, [])
 
+  useEffect(() => {
+    if (!userName) {
+      verifyLogin();
+    }
+
+  }, [])
+
   return (
     <Layout>
-      <h1>Home</h1>
+      <Header title="Home" userName={userName} />
       <div>
         {isLoading
           ? <p>Carregando</p>
