@@ -24,7 +24,7 @@ export default function Search() {
       const response = await fetch(`https://brasilapi.com.br/api/cptec/v1/cidade/${cityName}`);
 
       const data = await response.json();
-      console.log(data);
+      setCityList(data);
 
       setCityList(data);
     } catch (error) {

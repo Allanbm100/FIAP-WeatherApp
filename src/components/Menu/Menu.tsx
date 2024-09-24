@@ -8,7 +8,7 @@ export const Menu = () => {
       <StyledWrapperMenu> {/* Isso substitui o <ul>, está no menu.style.ts como funciona*/}
         <StyledMenuItem> {/* Isso substitui o <li>, está no menu.style.ts como funciona*/}
           <BiHomeAlt size="1.5rem" color="#38aede" />
-          <Link to="/">Início</Link> {/* Substituita da tag <a> */}
+          <Link to="/">Inicio</Link> {/* Substituita da tag <a> */}
         </StyledMenuItem>
         <StyledMenuItem>
           <BiSearch size="1.5rem" color="#38aede" />

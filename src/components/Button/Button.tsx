@@ -8,6 +8,8 @@ interface ButtonProps {
 
 export const Button = ({ children, type, onClick }: ButtonProps) => {
   return (
-    <StyledButton type={type} onClick={onClick}>{children}</StyledButton>
+    <StyledButton type={type} onClick={onClick}>
+      {children}
+    </StyledButton>
   );
 };

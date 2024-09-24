@@ -10,7 +10,7 @@ export default function Home() {
   // const [inicialCity, setInicialCity] = useState<number>(244);
 
   console.log(location);
-  
+
 
   const loadCity = async (cityCode: number) => {
     setIsLoading(true);
@@ -31,9 +31,8 @@ export default function Home() {
       loadCity(inicialCity);
       return
     }
-    
+
     loadCity(location.state.cityCode)
-    console.log(loadCity);
   }, [])
 
   return (
@@ -47,7 +46,7 @@ export default function Home() {
               {cityData?.cidade}/{cityData?.estado}
             </h2>
             <p>
-              Min <span>{cityData?.clima[0].min}</span> / 
+              Min <span>{cityData?.clima[0].min}</span> /
               Max <span>{cityData?.clima[0].max}</span>
             </p>
             <p>{cityData?.clima[0].condicao_desc}</p>
@@ -58,48 +57,48 @@ export default function Home() {
   );
 }
 
-  // {/* Esse 'export default' serve para exportarmos uma página completa */ }
+// {/* Esse 'export default' serve para exportarmos uma página completa */ }
 
-  // const [city, setCity] = useState([]);
+// const [city, setCity] = useState([]);
 
-  // const LoadCities = async () => { //O "async" torna o processamento assíncrono
+// const LoadCities = async () => { //O "async" torna o processamento assíncrono
 
-  //   // -----------------------------------------------------------------------------------------------
-  //   // P.S: Mema fita do try-catch usado abaixo, porém mais antiga e não tão usada
-  //   // -----------------------------------------------------------------------------------------------
-  //   // GET - Modelo da API
-  //   // fetch('https://brasilapi.com.br/api/cptec/v1/cidade') //Aqui fizemos uma requisição
-  //   //   .then((response) => { //Isso é um promise (promete que algo irá retornar)
-  //   //     console.log(response);
-  //   //     return response.json();
-  //   //   })
+//   // -----------------------------------------------------------------------------------------------
+//   // P.S: Mema fita do try-catch usado abaixo, porém mais antiga e não tão usada
+//   // -----------------------------------------------------------------------------------------------
+//   // GET - Modelo da API
+//   // fetch('https://brasilapi.com.br/api/cptec/v1/cidade') //Aqui fizemos uma requisição
+//   //   .then((response) => { //Isso é um promise (promete que algo irá retornar)
+//   //     console.log(response);
+//   //     return response.json();
+//   //   })
 
-  //   //   .then((data) => {
-  //   //     console.log(data);
-  //   //     setCity(data);
-  //   //   })
+//   //   .then((data) => {
+//   //     console.log(data);
+//   //     setCity(data);
+//   //   })
 
-  //   //  .catch() Serve para retornar os erros
-  //   //  .finally() Serve para quando finaliza a requisição
-  //   // -----------------------------------------------------------------------------------------------
+//   //  .catch() Serve para retornar os erros
+//   //  .finally() Serve para quando finaliza a requisição
+//   // -----------------------------------------------------------------------------------------------
 
-  //   try {
-  //     const response = await fetch('https://brasilapi.com.br/api/cptec/v1/cidade')
-  //     const data = await response.json() //O "Await" diz que isso vai ocorrer antes de continuar, ou seja, esperar
-  //     setCity(data)
+//   try {
+//     const response = await fetch('https://brasilapi.com.br/api/cptec/v1/cidade')
+//     const data = await response.json() //O "Await" diz que isso vai ocorrer antes de continuar, ou seja, esperar
+//     setCity(data)
 
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
-  // useEffect(() => {
-  //   // setCity(cityMock);
-  //   // console.log("useEffect");
+// useEffect(() => {
+//   // setCity(cityMock);
+//   // console.log("useEffect");
 
-  //   // if (city.length === 0) {
-  //   //   return;
-  //   // }
+//   // if (city.length === 0) {
+//   //   return;
+//   // }
 
-  //   LoadCities();
-  // }, []);
+//   LoadCities();
+// }, []);

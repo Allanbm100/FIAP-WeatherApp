@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { Input } from "../../components/Input/Input";
 import { Layout } from "../../components/Layout/Layout";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/UserContext";
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  const { setUserName } = useContext(UserContext)
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,19 +25,29 @@ export default function Login() {
     try {
       const response = await fetch('http://localhost:8000/user/login', {
         method: 'POST',
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
         body: JSON.stringify(params),
       })
 
       const data = await response.json()
 
-      console.log(data);
-      
+      if (data) {
+        sessionStorage.setItem("userToken", JSON.stringify(data));
+
+        const userData = jwtDecode(data.token);
+        setUserName(userData.name);
+        // setName(userName.name);
+
+        navigate("/perfil");
+      }
     } catch (error) {
-      console.log('error');
-      
+      console.log("error", error);
+
     } finally {
       console.log('finaly');
-      
+
     };
   }
 
@@ -41,8 +57,8 @@ export default function Login() {
       password: password
     }; // Isso é uma forma de colocar as informações em um objeto
 
-    console.log(params);
-  }
+    handleSendLogin(params);
+  };
 
   return (
     <Layout>
@@ -54,6 +70,7 @@ export default function Login() {
           name="login"
           label="Login"
           onChange={handleLogin}
+          placeholder="digite seu email"
         />
 
         <Input
