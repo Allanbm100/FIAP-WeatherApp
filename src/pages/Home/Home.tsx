@@ -2,20 +2,24 @@ import { useContext, useEffect, useState } from "react";
 import { Layout } from "../../components/Layout/Layout";
 import { useLocation } from "react-router-dom";
 import UserContext from "../../context/UserContext";
-import { verifyLogin } from "../../helpers/verifyLogin";
 import { Header } from "../../components/Header/Header";
+import { useVerifyLogin } from "../../helpers/useVerifyLogin";
 
 export default function Home() {
   const location = useLocation();
 
+  useVerifyLogin();
   const { userName } = useContext(UserContext);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [cityData, setCityData] = useState();
+  const [forecast, setForecast] = useState([]);
   // const [inicialCity, setInicialCity] = useState<number>(244);
 
   console.log(location);
 
+  const dateFormat = (data: string) => {
+    return new Date(data).toLocaleDateString('pt-br', { timeZone: 'UTC' });
+  }
 
   const loadCity = async (cityCode: number) => {
     setIsLoading(true);
@@ -30,21 +34,38 @@ export default function Home() {
     }
   }
 
+  const loadForecast = async (cityCode: number) => {
+
+    const params = {
+      code: cityCode,
+      days: 6
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `https://brasilapi.com.br/api/cptec/v1/clima/previsao/${params.code}/${params.days}`
+      ); //path Param (existem query param tb)
+      
+        const data = await response.json();
+      setForecast(data.clima);
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   useEffect(() => {
     if (!location.state) {
       const inicialCity = 244
       loadCity(inicialCity);
+      loadForecast(inicialCity)
       return
     }
 
     loadCity(location.state.cityCode)
-  }, [])
-
-  useEffect(() => {
-    if (!userName) {
-      verifyLogin();
-    }
-
+    loadForecast(location.state.cityCode)
   }, [])
 
   return (
@@ -52,18 +73,29 @@ export default function Home() {
       <Header title="Home" userName={userName} />
       <div>
         {isLoading
-          ? <p>Carregando</p>
-          : <div>
-            <h2>
-              {cityData?.cidade}/{cityData?.estado}
-            </h2>
-            <p>
-              Min <span>{cityData?.clima[0].min}</span> /
-              Max <span>{cityData?.clima[0].max}</span>
-            </p>
-            <p>{cityData?.clima[0].condicao_desc}</p>
+          ? (<p>Carregando</p>
+          ) : (
+            <div>
+              <h2>
+                {cityData?.cidade}/{cityData?.estado}
+              </h2>
+              <p>
+                Min <span>{cityData?.clima[0].min}</span> /
+                Max <span>{cityData?.clima[0].max}</span>
+              </p>
+              <p>{cityData?.clima[0].condicao_desc}</p>
+            </div>
+          )}
+      </div>
+      <div>
+        {forecast.map((item) => (
+          <div key={item.data}>
+            <span>{dateFormat(item.data)}</span>
+            <span>{item.condicao}</span>
+            <span>Min: {item.min}&#176;</span>
+            <span>Max: {item.max}&#176;</span>
           </div>
-        }
+        ))}
       </div>
     </Layout>
   );

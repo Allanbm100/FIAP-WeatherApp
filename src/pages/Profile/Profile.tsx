@@ -4,12 +4,14 @@ import UserContext from "../../context/UserContext";
 import { useContext, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Header } from "../../components/Header/Header";
+import { useVerifyLogin } from "../../helpers/useVerifyLogin";
 
 export default function Profile() {
   {/* Esse 'export default' serve para exportarmos uma página completa */ }
 
   const navigate = useNavigate();
-
+  
+  useVerifyLogin();
   const { userName, setUserName } = useContext(UserContext)
 
   useEffect(() => {

@@ -5,12 +5,14 @@ import { Input } from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
 import UserContext from "../../context/UserContext";
 import { Header } from "../../components/Header/Header";
+import { useVerifyLogin } from "../../helpers/useVerifyLogin";
 
 export default function Search() {
   // Esse 'export default' serve para exportarmos uma página completa
 
   const navigate = useNavigate();
 
+  useVerifyLogin();
   const { userName } = useContext(UserContext);
   const [cityName, setCityName] = useState<string>("");
   const [cityList, setCityList] = useState([]);
